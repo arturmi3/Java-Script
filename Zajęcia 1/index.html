@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="src/style.css">
+  </head>
+
+  <body>
+    <div id="header">
+        <label for="sum">Suma:</label>
+        <output type="number" id="sum" name="sum"></output>
+        <p></p>
+        <label for="avg">Średnia:</label>
+        <output type="number" id="avg" name="avg"></output>
+        <p></p>
+        <label for="min">Minimum:</label>
+        <output type="number" id="min" name="min"></output>
+        <p></p>
+        <label for="max">Maksimum:</label>
+        <output type="number" id="max" name="max"></output>
+        <p></p>
+    </div>
+    <button onclick="add()">Dodaj pole</button>
+    <ul id="fields">
+        <li>
+            <label for="liczba1">Liczba 1:</label>
+            <input type="number" id="liczba1" name="liczba1">
+        </li>
+    </ul>
+
+    <script src="src/script.js"></script>
+  </body>
+
+</html>
