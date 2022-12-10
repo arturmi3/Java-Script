@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Notekeep</title>
+        <link rel="stylesheet" href="src/style.css">
+    </head>
+
+    <body>
+        <form id="new_note" class="cell" onsubmit="save_data()">
+            <label>Title: <input name="title" type="text" value="Type new note here!"/></label><br>
+            <label>Content: <textarea name="content" ></textarea></label><br>
+            <label>Colour: <input name="colour" type="color" value="#c3f9f5" /> </label><br>
+            <label>Pin: <input name="pin" type="checkbox" /></label><br>
+            <button type="submit">Save</button> <br>
+            <button type="button" onclick="clear_table()">Clear table</button> 
+        </form>
+           
+        <br>
+        <span>Pinned notes:</span>
+        <hr/>
+
+        <div id="pinned" class="wrapper">
+        </div>
+        <br>
+        <span>Notes:</span>
+        <hr/>
+        <div id="table" class="wrapper">
+        </div>
+
+        <script src="src/script.js"></script>
+    </body>
+</html> 

@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <style>
+        body {
+            background: rgba(128, 128, 128, 0.307);
+        }
+        #table {
+            background: whitesmoke;
+        }
+    </style>
+</head>
+<body>
+    <p id="header"></p>
+    <p>(300 kulek powoduje spadek tempa do 50 klatek/sek)</p>
+    <p>
+        <label> X: <input id="inputX" type="range" min="2" max="400" value="10" oninput="this.nextElementSibling.value = this.value"> <output>10</output> </label>
+    </p>
+    <p>
+        <label> Y: <input id="inputY" type="range" min="1" max="100" value="40" oninput="this.nextElementSibling.value = this.value"> <output>40</output> </label>
+    </p>
+    <p> 
+        <button id="startButton" onclick="start()">Start</button> 
+        <button id="resetButton" onclick="reset()">Reset</button>
+    </p>
+    <canvas id="table" width="800px" height="600px"></canvas>
+    
+    <script src="index.js"></script>
+</body>
+</html>

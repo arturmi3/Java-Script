@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="src/style.css">
+    </head>
+
+    <body>
+        <label>[A]<audio src="./sounds/boom.wav" controls id="s1"></audio></label>
+        <label>[S]<audio src="./sounds/clap.wav" controls id="s2"></audio></label>
+        <label>[D]<audio src="./sounds/hihat.wav" controls id="s3"></audio></label><br/>
+        <label>[F]<audio src="./sounds/kick.wav" controls id="s4"></audio></label>
+        <label>[G]<audio src="./sounds/openhat.wav" controls id="s5"></audio></label>
+        <label>[H]<audio src="./sounds/ride.wav" controls id="s6"></audio></label><br/>
+        <label>[J]<audio src="./sounds/snare.wav" controls id="s7"></audio></label>
+        <label>[K]<audio src="./sounds/tink.wav" controls id="s8"></audio></label>
+        <label>[L]<audio src="./sounds/tom.wav" controls id="s9"></audio></label><br/>
+        <br />
+
+        <div>
+            <label>Metronom: <input id="freq" type="number" value="50" /> <button id="metrStartStop" class="Buttons">Start</button> </label>
+        </div>
+
+        <div class="tracks">
+            <label>TRACK 1:<input type="radio" id="rec1" name="track" value="1" />REC</label> 
+            <label><input type="checkbox" name="play" id="ply1" value="1"/>PLAY</label> 
+            <br/>
+            <label>TRACK 2:<input type="radio" id="rec2" name="track" value="2" />REC</label> 
+            <label><input type="checkbox" name="play" id="ply2" value="2"/>PLAY</label> 
+            <br/>
+            <label>TRACK 3:<input type="radio" id="rec3" name="track" value="3" />REC</label> 
+            <label><input type="checkbox" name="play" id="ply3" value="3"/>PLAY</label> 
+            <br/>
+            <label>TRACK 4:<input type="radio" id="rec4" name="track" value="4" />REC</label> 
+            <label><input type="checkbox" name="play" id="ply4" value="4"/>PLAY</label> 
+            <br/>
+        </div>
+
+        <div>
+            <button id="Record" class="Buttons">Record</button>
+            <button id="Play" class="Buttons">Play</bytton>
+        </div>
+
+        <script src="src/drumkit.js"></script>
+    </body> 
+</html>

@@ -1,0 +1,30 @@
+body {
+    background: transparent;
+    /* Make it white if you need */
+    color: black;
+    padding: 0 24px;
+    margin: 0;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+.tracks label {
+    display:inline-block;
+    padding:15px 10px;
+    line-height:120%;
+}
+
+.Buttons {
+    padding: 10px;
+    font-weight: bold;
+}
+
+#Play {
+    background-color: green;
+}
+
+#Record {
+    background-color: red;
+}
