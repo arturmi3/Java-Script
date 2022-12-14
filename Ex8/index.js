@@ -4,14 +4,20 @@ const canvas = document.querySelector("#table");
 const startButton = document.querySelector("#startButton")
 const resetButton = document.querySelector("#resetButton")
 const inputX = document.querySelector("#inputX")
-const inputY = document.querySelector("#inputY")
+const inputY = document.querySelector("#inputY") 
+let mouse_position = null
+
+canvas.addEventListener("mousemove", function(event) {
+  //console.log(event.offsetX, event.offsetY, event.buttons)
+  mouse_position = (event.buttons == 1) ? event :  null
+})
 
 let X = 10
 const ball_radius = 30
 const canvas_width = canvas.width
 const canvas_height = canvas.height
 const speed_factor = 3
-let Y = 40  // max connection length
+let Y = 40  // max connection length  
 const connect_width = 5
 
 let playing = false
@@ -138,7 +144,14 @@ function animate() {
       let x_speed = b.x_speed    
       let y_speed = b.y_speed
     
-      // collizion
+      if (mouse_position != null) {
+        let d = distance(b, {x: mouse_position.offsetX, y: mouse_position.offsetY})
+        if ((d < 2 * ball_radius) && (d > 3)) {
+          x_speed += ((mouse_position.offsetX - x) * 1 / d) / ball_radius 
+          y_speed += ((mouse_position.offsetY - y) * 1 / d) / ball_radius 
+        }
+      }
+      // collision
       if ((x <= ball_radius) || (x >= canvas_width - ball_radius)) x_speed = -x_speed
       if ((y <= ball_radius) || (y >= canvas_height - ball_radius)) y_speed = -y_speed
       

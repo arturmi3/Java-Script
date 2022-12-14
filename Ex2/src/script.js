@@ -31,23 +31,6 @@ for (let index = 0; index < photos.length; index++) {
 	elNavDots.appendChild(label)
 }
 
-
-for (let index = 0; index < photos.length; index++) {
-    const element = photos[index]
-
-	let img = document.createElement("img")
-	img.setAttribute("alt", `Slide ${index+1}`)
-	img.setAttribute("src", element)
-
-	let div = document.createElement("div")
-	div.appendChild(img)
-	let li = document.createElement("li")
-	li.appendChild(div)
-
-	elSliderList.appendChild(li)
-}
-
-
 var slideCount = document.querySelectorAll('#slider ul li').length
 var slideWidth = document.querySelector('#slider ul li').clientWidth
 var slideHeight = document.querySelector('#slider ul li').clientHeight
