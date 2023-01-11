@@ -1,4 +1,3 @@
-
 const header = document.querySelector("#header");
 const canvas = document.querySelector("#table");
 const startButton = document.querySelector("#startButton")
@@ -20,9 +19,14 @@ const speed_factor = 3
 let Y = 40  // max connection length  
 const connect_width = 5
 
+function Ball(x, y, x_speed, y_speed, connections) {
+  return { x: x, y: y, x_speed: x_speed, y_speed: y_speed, connections: connections}
+}
+
 let playing = false
 
-const balls = [] 
+let balls = []  // Ball[]
+
 X = parseInt(inputX.value)
 Y = parseInt(inputY.value)
 setRandomScane()
@@ -35,34 +39,34 @@ showStatistics()
 requestAnimationFrame(animate)
 
 function setRandomScane() {
-  balls.length = 0
+  balls = []
   for (let i = 0; i < X; i++) {
     let { x, y, x_speed, y_speed, connections } = randomBall(); // connected balls (indexes)
-    balls.push({ x, y, x_speed, y_speed, connections });
+    balls.push( Ball(x, y, x_speed, y_speed, connections));
   }
-  setConnections();
+  calculateConnections();
 }
 
 function randomBall() {
-  let x = ball_radius + Math.random() * (canvas_width - 2 * ball_radius);
-  let y = ball_radius + Math.random() * (canvas_height - 2 * ball_radius);
-  let x_speed = speed_factor * (Math.random() - 0.5);
-  let y_speed = speed_factor * (Math.random() - 0.5);
+  let x = ball_radius + Math.random() * (canvas_width - 2 * ball_radius)
+  let y = ball_radius + Math.random() * (canvas_height - 2 * ball_radius)
+  let x_speed = speed_factor * (Math.random() - 0.5)
+  let y_speed = speed_factor * (Math.random() - 0.5)
   let connections = []; // connected balls (indexes)
-  return { x, y, x_speed, y_speed, connections };
+  return Ball(x, y, x_speed, y_speed, connections)
 }
 
-function setConnections() {
+function calculateConnections() {
   // how to avoid repeated connections? j = i + 1 !
   for(let i = 0; i < balls.length - 1; i++) {
-    let c = []
+    let currentBallConnections = []
     for(let j = i + 1; j < balls.length; j++) {
       let d = distance(balls[i], balls[j])
       if (d <= (Y + 2 * ball_radius)) {
-        c.push(j)
+        currentBallConnections.push(j)
       }
     }
-    balls[i].connections = c
+    balls[i].connections = currentBallConnections
   }
 }
 
@@ -109,7 +113,7 @@ function addBall() {
   if (!playing) {
     X += 1
     balls.push(randomBall())
-    setConnections()
+    calculateConnections()
     requestAnimationFrame(animate)
   }
 }
@@ -119,18 +123,18 @@ function animate() {
   let ctx = canvas.getContext("2d");
   ctx.clearRect(0, 0, canvas_width, canvas_height);
   
-  balls.forEach(b => {
+  balls.forEach(ball => {
     ctx.beginPath();
     ctx.fillStyle = "#FF0000";
-    ctx.arc(b.x, b.y, ball_radius, 0, 2 * Math.PI);
+    ctx.arc(ball.x, ball.y, ball_radius, 0, 2 * Math.PI);
     ctx.fill();
 
-    b.connections.forEach(index => {
+    ball.connections.forEach(index => {
       ctx.beginPath();
       // set line color
       ctx.strokeStyle = '#ff0000';
       ctx.lineWidth = connect_width;
-      ctx.moveTo(b.x, b.y)
+      ctx.moveTo(ball.x, ball.y)
       ctx.lineTo(balls[index].x, balls[index].y)
       ctx.stroke();
     })
@@ -138,39 +142,10 @@ function animate() {
 
   // move
   if (playing) {
-    balls.forEach(b => {
-      let x = b.x
-      let y = b.y
-      let x_speed = b.x_speed    
-      let y_speed = b.y_speed
-    
-      if (mouse_position != null) {
-        let d = distance(b, {x: mouse_position.offsetX, y: mouse_position.offsetY})
-        if ((d < 2 * ball_radius) && (d > 3)) {
-          x_speed += ((mouse_position.offsetX - x) * 1 / d) / ball_radius 
-          y_speed += ((mouse_position.offsetY - y) * 1 / d) / ball_radius 
-        }
-      }
-      // collision
-      if ((x <= ball_radius) || (x >= canvas_width - ball_radius)) x_speed = -x_speed
-      if ((y <= ball_radius) || (y >= canvas_height - ball_radius)) y_speed = -y_speed
-      
-      x = x + x_speed 
-      y = y + y_speed
-
-      // donot cross wall!
-      if (x < ball_radius) x = ball_radius
-      if (x > canvas.width - ball_radius) x = canvas.width - ball_radius
-      if (y < ball_radius) y = ball_radius
-      if (y > canvas.height - ball_radius) y = canvas.height - ball_radius
-
-      // next possition and direction
-      b.x = x
-      b.y = y
-      b.x_speed = x_speed
-      b.y_speed = y_speed
+    balls.forEach(ball => {
+      calculateNextPosition(ball);
     })
-    setConnections()
+    calculateConnections()
   }
 
   if (playing) {
@@ -191,6 +166,44 @@ function animate() {
   if (playing) requestAnimationFrame(animate)
 }
 
+function calculateNextPosition(ball) {
+  let x = ball.x;
+  let y = ball.y;
+  let x_speed = ball.x_speed;
+  let y_speed = ball.y_speed;
+
+  if (mouse_position != null) {
+    let d = distance(ball, { x: mouse_position.offsetX, y: mouse_position.offsetY });
+    if ((d < 2 * ball_radius) && (d > 3)) {
+      x_speed += ((mouse_position.offsetX - x) * 1 / d) / ball_radius;
+      y_speed += ((mouse_position.offsetY - y) * 1 / d) / ball_radius;
+    }
+  }
+  // collision
+  if ((x <= ball_radius) || (x >= canvas_width - ball_radius))
+    x_speed = -x_speed;
+  if ((y <= ball_radius) || (y >= canvas_height - ball_radius))
+    y_speed = -y_speed;
+
+  x = x + x_speed;
+  y = y + y_speed;
+
+  // donot cross wall!
+  if (x < ball_radius)
+    x = ball_radius;
+  if (x > canvas.width - ball_radius)
+    x = canvas.width - ball_radius;
+  if (y < ball_radius)
+    y = ball_radius;
+  if (y > canvas.height - ball_radius)
+    y = canvas.height - ball_radius;
+
+  // next possition and direction
+  ball.x = x;
+  ball.y = y;
+  ball.x_speed = x_speed;
+  ball.y_speed = y_speed;
+}
 
 function showStatistics() {
   header.innerHTML = `#Balls: ${X}, Frames per sek: ${Math.round(framesPerSek, 1)}`

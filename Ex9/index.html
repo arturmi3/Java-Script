@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <style>
+        #container {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            margin: 5px;
+            background-color:lightgray;
+        }
+
+        .box {
+            width: 200px;
+            height: 200px;
+            background-color: aquamarine;
+            margin: 20px;
+        }
+
+        .box button {
+            padding-right: 30px;
+            font-weight: bold;
+        }
+
+        #header {
+            background-color: beige;
+            font-size: larger;
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .box img {
+            
+        }
+
+        .temp {
+            float: right;
+            font-size: larger;
+        }
+    </style>
+    <title>WebWorker</title>
+</head>
+
+<body>
+    <div id="header">
+        <label>Country:
+            <select id="country">
+                <option value="pl" selected>Poland</option>
+                <option value="de">Germany</option>
+                <option value="fr">France</option>
+                <option value="it">Italy</option>
+            </select>
+        </label>
+        <label>City:<input id="city" type="search"></label>
+        <button onclick="addCity()">Add</button>
+    </div>
+
+    <div id="container">
+    </div>
+
+    <script src="index.js"></script>
+
+</body>
+
+</html>
